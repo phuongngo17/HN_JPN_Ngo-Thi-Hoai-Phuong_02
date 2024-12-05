@@ -15,19 +15,15 @@ void dem_chan_le(int arr[], int n) {
     printf("So phan tu le: %d\n", le);
 }
 
-int binary_search(int arr[], int n, int x) {
-    int low = 0, high = n - 1;
-    while (low <= high) {
-        int mid = (low + high) / 2;
-        if (arr[mid] == x) {
-            return mid;
-        } else if (arr[mid] < x) {
-            low = mid + 1;
-        } else {
-            high = mid - 1;
-        }
+bool binarySearch(int arr[], int n, int value) {
+    int left = 0, right = n - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (arr[mid] == value) return true;
+        if (arr[mid] < value) left = mid + 1;
+        else right = mid - 1;
     }
-    return -1;
+    return false;
 }
 
 bool is_prime(int n) {
@@ -67,7 +63,7 @@ int main(){
 	int arr[100];
 	int choice,n;
 	int value,found;
-	do{
+	while(1){
 		printf("\nMenu\n");
 		printf("1.Nhap so phan tu va gia tri cho mang\n");
 		printf("2.In ra gia tri cac phan tu trong mang theo dong (arr[0] = 1, arr[1] = 5...)\n");
@@ -163,26 +159,25 @@ int main(){
                 printf("Mang da duoc sap xep giam dan.\n");
 				break;
 			case 8:
-			  int x;
-                printf("Nhap phan tu can tim: ");
-                scanf("%d", &x);
-                int result = binary_search(arr, n, x);
-                if (result != -1) {
-                    printf("Phan tu %d ton tai trong mang tai vi tri %d.\n", x, result);
+                printf("Nhap gia tri can tim: ");
+                scanf("%d", &value);
+                if (binarySearch(arr, n, value)) {
+                    printf("Phan tu %d co ton tai trong mang\n", value);
                 } else {
-                    printf("Phan tu %d khong ton tai trong mang.\n", x);
+                    printf("Phan tu %d khong ton tai trong mang\n", value);
                 }
                 break;
-            }
 			case 9:
 				in_so_nguyen_to_binh_phuong(arr, n);
 				break;
 			case 10:
 				bubble_sort(arr, n);
 				break;
+			case 0:
+				exit(0);
 			default:
 	                printf("Lua chon khong hop le\n");
 		}
-	}while(choice!=11);
+	}
 	return 0;
 }
